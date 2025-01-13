@@ -9,17 +9,16 @@ class Personaje:
         #self es una referencia al mismo objeto
         self.nombre = nombre
         self.fuerza = fuerza
-        self.fuerza = fuerza
         self.inteligencia = inteligencia
         self.defensa = defensa
         self.vida = vida
         
 # preguntas de examen
 # ¿que es self en programación? es una referencia al mismo objeto
-# ¿qué es el métodod init?
-# constructor que inicializa atributos de un objeto
+# ¿qué es el método init?  constructor que inicializa atributos de un objeto
 # ¿por qué se usa doble guión bajo? dunder, método especial de python, mágico
-# ¿cuando se ejcuta el método init? se ejecuta automático al crear un objetosigno igual s asignar una variable
+# ¿cuando se ejecuta el método init? se ejecuta automático al crear un objeto
+# #signo igual es asignar una variable
 
     def imprimir_atributos(self):
         print(self.nombre, "tiene:")
@@ -45,13 +44,20 @@ class Personaje:
     
     def atacar(self, enemigo):
         daño = self.dañar(enemigo)
-        enemigo.vida = enemigo.vida - daño
+        # Si el daño es negativo, lo ajustamos a 0
+        if daño < 0:
+            daño = 0
+        # Evitar que la vida del enemigo sea negativa
+        if enemigo.vida - daño < 0:
+            enemigo.vida = 0
+        else:
+            enemigo.vida -= daño
         print(self.nombre, "ha realizado", daño, "puntos de daño a", enemigo.nombre)
         print("vida de ", enemigo.nombre, "es ", enemigo.vida)
     
 #variable del constructor vacío
 mi_personaje = Personaje("EstebanDido", 100, 50, 45, 100)
-mi_enemigo = Personaje("Ángel", 70, 100, 40, 100)
+mi_enemigo = Personaje("Ángel", 70, 100, 400, 100)
 mi_personaje.imprimir_atributos()
 mi_enemigo.imprimir_atributos()
 mi_personaje.atacar(mi_enemigo)
