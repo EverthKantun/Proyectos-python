@@ -7,11 +7,11 @@ class Personaje:
     # vida = 0
     def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
         #self es una referencia al mismo objeto
-        self.nombre = nombre
-        self.fuerza = fuerza
-        self.inteligencia = inteligencia
-        self.defensa = defensa
-        self.vida = vida
+        self.__nombre = nombre
+        self.__fuerza = fuerza
+        self.__inteligencia = inteligencia
+        self.__defensa = defensa
+        self.__vida = vida
         
 # preguntas de examen
 # ¿que es self en programación? es una referencia al mismo objeto
@@ -21,26 +21,26 @@ class Personaje:
 # #signo igual es asignar una variable
 
     def imprimir_atributos(self):
-        print(self.nombre, "tiene:")
-        print("-Fuerza:", self.fuerza)
-        print("-Inteligencia:", self.inteligencia)
-        print("-defensa:", self.defensa)
-        print("-vida:", self.vida)
+        print(self.__nombre, "tiene:")
+        print("-Fuerza:", self.__fuerza)
+        print("-Inteligencia:", self.__inteligencia)
+        print("-defensa:", self.__defensa)
+        print("-vida:", self.__vida)
         
     def subir_nivel(self, fuerza, inteligencia, defensa):
-        self.fuerza = self.fuerza + fuerza
-        self.inteligencia = self.inteligencia + inteligencia
-        self.defensa = self.defensa + defensa
+        self.__fuerza = self.__fuerza + fuerza
+        self.__inteligencia = self.__inteligencia + inteligencia
+        self.__defensa = self.__defensa + defensa
         
     def esta_vivo(self):
-        return self.vida > 0 
+        return self.__vida > 0 
     
     def morir(self):
-        self.vida = 0
-        print(self.nombre, "ha muerto")
+        self.__vida = 0
+        print(self.__nombre, "ha muerto")
     
     def dañar(self, enemigo):
-        return self.fuerza - enemigo.defensa
+        return self.__fuerza - enemigo.__defensa
     
     def atacar(self, enemigo):
         daño = self.dañar(enemigo)
@@ -48,33 +48,48 @@ class Personaje:
         if daño < 0:
             daño = 0
         # Evitar que la vida del enemigo sea negativa
-        if enemigo.vida - daño < 0:
-            enemigo.vida = 0
+        if enemigo.__vida - daño < 0:
+            enemigo.__vida = 0
         else:
-            enemigo.vida -= daño
-        print(self.nombre, "ha realizado", daño, "puntos de daño a", enemigo.nombre)
-        print("vida de ", enemigo.nombre, "es ", enemigo.vida)
+            enemigo.__vida -= daño
+        print(self.__nombre, "ha realizado", daño, "puntos de daño a", enemigo.__nombre)
+        print("vida de ", enemigo.__nombre, "es ", enemigo.__vida)
+        
+    def get_vida(self):
+        return self.__vida
+    
+    def set_vida(self, vida):
+        self.__vida = vida
+        if self.__vida <= 0: 
+            self.morir()
     
 #variable del constructor vacío
 mi_personaje = Personaje("EstebanDido", 100, 50, 45, 100)
 mi_enemigo = Personaje("Ángel", 70, 100, 400, 100)
 mi_personaje.imprimir_atributos()
-mi_enemigo.imprimir_atributos()
-mi_personaje.atacar(mi_enemigo)
+mi_personaje.vida = 0
+print(f"hola: {mi_personaje.get_vida()}")
+mi_personaje.set_vida(-5)
+print(f"actualizado: {mi_personaje.get_vida()}")
+mi_personaje._Personaje__vida = -50
+#mi_personaje.vida()
+mi_personaje.imprimir_atributos()
+# mi_enemigo.imprimir_atributos()
+#mi_personaje.atacar(mi_enemigo)
 #print(mi_personaje.esta_vivo())
 # mi_personaje.subir_nivel(15, 5, 10)
 # print("valores actualizados")
 # mi_personaje.imprimir_atributos()
 
 #modificando valores de los atributos
-# mi_personaje.nombre = "EstebanDido"
-# mi_personaje.fuerza = 300
-# mi_personaje.inteligencia = -2
-# mi_personaje.defensa = 30
-# mi_personaje.vida = 2
+# mi_personaje.__nombre = "EstebanDido"
+# mi_personaje.__fuerza = 300
+# mi_personaje.__inteligencia = -2
+# mi_personaje.__defensa = 30
+# mi_personaje.__vida = 2
 
-# print("el nombre de mi personaje es: ", mi_personaje.nombre)
-# print("vida de mi personaje es: ", mi_personaje.vida)
-# print("fuerza de mi personaje es: ", mi_personaje.fuerza)
-# print("inteligencia de mi personaje es: ", mi_personaje.inteligencia)
-# print("defensa de mi personaje es: ", mi_personaje.defensa)
+# print("el nombre de mi personaje es: ", mi_personaje.__nombre)
+# print("vida de mi personaje es: ", mi_personaje.__vida)
+# print("fuerza de mi personaje es: ", mi_personaje.__fuerza)
+# print("inteligencia de mi personaje es: ", mi_personaje.__inteligencia)
+# print("defensa de mi personaje es: ", mi_personaje.__defensa)
