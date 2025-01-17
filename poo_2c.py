@@ -40,6 +40,7 @@ class Personaje:
         print(self.nombre, "ha muerto")
     
     def dañar(self, enemigo):
+        #aquí podriamos usar el max max(0, self.fuerza - enemigo.defensa)
         return self.fuerza - enemigo.defensa
     
     def atacar(self, enemigo):
@@ -57,21 +58,88 @@ class Personaje:
         
 class Guerrero(Personaje):
     
-    #sobreescribir el constructor
+    #sobrescribir el constructor
     def __init__(self, nombre, fuerza, inteligencia, defensa, vida, espada):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.espada = espada
 
+    #sobrescribir impresión de atributos
+    def imprimir_atributos(self):
+        super().imprimir_atributos()
+        print("valor de la espada: ", self.espada)
+    
+    #sobrescribir el cálculo del daño
+    def dañar(self, enemigo):
+        return self.fuerza*self.espada - enemigo.defensa
+        
+    #escoger navaja
+    def escoger_navaja(self):
+        opcion = int(input("escoge la navaja de la muerte: \n (1) Navaja suiza, daño 10. \n (2) Navaja pioja, daño 6. \n >>>>>>>>"))
+        if(opcion == 1):
+            self.espada = 10
+        elif(opcion == 2):
+            self.espada = 6
+        else:
+            print("Valor inválido, intente nuevamente")
+            #lo regresamos a elegir
+            self.escoger_navaja()
+    
+class Mago(Personaje):
+    
+    #sobrescribir el constructor
+    def __init__(self, nombre, fuerza, inteligencia, defensa, vida, libro):
+        super().__init__(nombre, fuerza, inteligencia, defensa, vida)
+        self.libro = libro
+
+    #sobrescribir impresión de atributos
+    def imprimir_atributos(self):
+        super().imprimir_atributos()
+        print("valor de su libro de hechizos: ", self.libro)
+    
+    #sobrescribir el cálculo del daño
+    def dañar(self, enemigo):
+        return self.inteligencia*self.libro - enemigo.defensa
+        
+    #escoger navaja
+    def escoger_libro(self):
+        opcion = int(input("escoge el libro de la sabiduría: \n (1) El principito, daño 10. \n (2) Crepúsculo, daño -10. \n >>>>>>>>"))
+        if(opcion == 1):
+            self.libro = 10
+        elif(opcion == 2):
+            self.libro = 6
+        else:
+            print("Valor inválido, intente nuevamente")
+            #lo regresamos a elegir
+            self.escoger_libro()
+    
+
+
+persona = Personaje("Ángel Suarez", 12, 3000, 2, 100)   
 arturoSuarez = Guerrero("Arturo Suarez", 12, 3000, 2, 100, .5)
+gandalf = Mago("Gandalf", 12, 3000, 2, 100, 5)
+arturoSuarez.escoger_navaja()
+gandalf.escoger_libro()
+#atributos antes de la pelea
 arturoSuarez.imprimir_atributos()
-print("el valor de la espada es:", arturoSuarez.espada)
+gandalf.imprimir_atributos()
+persona.imprimir_atributos()
+#iniciar ataques
+persona.atacar(arturoSuarez)
+arturoSuarez.atacar(gandalf)
+gandalf.atacar(persona)
+#atributos después de la tragedia
+arturoSuarez.imprimir_atributos()
+gandalf.imprimir_atributos()
+persona.imprimir_atributos()
+
+# print("el valor de la espada es:", arturoSuarez.espada)
     
 #variable del constructor vacío
-mi_personaje = Personaje("EstebanDido", 100, 50, 45, 100)
-mi_enemigo = Personaje("Ángel", 70, 100, 400, 100)
-mi_personaje.imprimir_atributos()
-mi_enemigo.imprimir_atributos()
-mi_personaje.atacar(mi_enemigo)
+# mi_personaje = Personaje("EstebanDido", 100, 50, 45, 100)
+# mi_enemigo = Personaje("Ángel", 70, 100, 400, 100)
+# mi_personaje.imprimir_atributos()
+# mi_enemigo.imprimir_atributos()
+# mi_personaje.atacar(mi_enemigo)
 #print(mi_personaje.esta_vivo())
 # mi_personaje.subir_nivel(15, 5, 10)
 # print("valores actualizados")
