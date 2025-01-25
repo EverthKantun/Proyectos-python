@@ -59,10 +59,15 @@ class Personaje:
 class Guerrero(Personaje):
     
     #sobrescribir el constructor
-    def __init__(self, nombre, fuerza, inteligencia, defensa, vida, espada):
+    def __init__(self, nombre, fuerza, inteligencia, defensa, vida, espada, escudo):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.espada = espada
-
+        self.defensa += escudo
+        self.inventario_pocimas = {
+            "vida": 1,  # Cantidad inicial de pócimas de vida
+            "fuerza": 1,  # Cantidad inicial de pócimas de fuerza
+            "inteligencia": 1  # Cantidad inicial de pócimas de inteligencia
+        }
     #sobrescribir impresión de atributos
     def imprimir_atributos(self):
         super().imprimir_atributos()
@@ -71,6 +76,39 @@ class Guerrero(Personaje):
     #sobrescribir el cálculo del daño
     def dañar(self, enemigo):
         return self.fuerza*self.espada - enemigo.defensa
+    
+    def usar_pocima(self):
+        print("Elige la pócima que deseas usar: \n (1) Pócima de vida (restaura 20 puntos de vida). \n (2) Pócima de fuerza (aumenta fuerza un 50%). \n (3) Pócima de inteligencia (aumenta inteligencia un 50%).")
+    
+        opcion = int(input(">>>>>>>>> "))
+        
+        if opcion == 1:
+            if self.inventario_pocimas["vida"] > 0:
+                self.vida += 20
+                self.inventario_pocimas["vida"] -= 1
+                print(f"{self.nombre} usó una pócima de vida. Nueva vida: {self.vida}")
+            else:
+                print("No tienes pócimas de vida disponibles.")
+        elif opcion == 2:
+            if self.inventario_pocimas["fuerza"] > 0:
+                incremento = self.fuerza * 0.5
+                self.fuerza += incremento
+                self.inventario_pocimas["fuerza"] -= 1
+                print(f"{self.nombre} usó una pócima de fuerza. Nueva fuerza: {self.fuerza}")
+            else:
+                print("No tienes pócimas de fuerza disponibles.")
+        elif opcion == 3:
+            if self.inventario_pocimas["inteligencia"] > 0:
+                incremento = self.inteligencia * 0.5
+                self.inteligencia += incremento
+                self.inventario_pocimas["inteligencia"] -= 1
+                print(f"{self.nombre} usó una pócima de inteligencia. Nueva inteligencia: {self.inteligencia}")
+            else:
+                print("No tienes pócimas de inteligencia disponibles.")
+        else:
+            print("Valor inválido, intente nuevamente.")
+            # Lo regresamos a elegir
+            self.usar_pocima()   
         
     #escoger navaja
     def escoger_navaja(self):
@@ -90,6 +128,11 @@ class Mago(Personaje):
     def __init__(self, nombre, fuerza, inteligencia, defensa, vida, libro):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.libro = libro
+        self.inventario_pocimas = {
+            "vida": 1,  # Cantidad inicial de pócimas de vida
+            "fuerza": 1,  # Cantidad inicial de pócimas de fuerza
+            "inteligencia": 1  # Cantidad inicial de pócimas de inteligencia
+        }
 
     #sobrescribir impresión de atributos
     def imprimir_atributos(self):
@@ -99,6 +142,39 @@ class Mago(Personaje):
     #sobrescribir el cálculo del daño
     def dañar(self, enemigo):
         return self.inteligencia*self.libro - enemigo.defensa
+    
+    def usar_pocima(self):
+        print("Elige la pócima que deseas usar: \n (1) Pócima de vida (restaura 20 puntos de vida). \n (2) Pócima de fuerza (aumenta fuerza un 50%). \n (3) Pócima de inteligencia (aumenta inteligencia un 50%).")
+    
+        opcion = int(input(">>>>>>>>> "))
+        
+        if opcion == 1:
+            if self.inventario_pocimas["vida"] > 0:
+                self.vida += 20
+                self.inventario_pocimas["vida"] -= 1
+                print(f"{self.nombre} usó una pócima de vida. Nueva vida: {self.vida}")
+            else:
+                print("No tienes pócimas de vida disponibles.")
+        elif opcion == 2:
+            if self.inventario_pocimas["fuerza"] > 0:
+                incremento = self.fuerza * 0.5
+                self.fuerza += incremento
+                self.inventario_pocimas["fuerza"] -= 1
+                print(f"{self.nombre} usó una pócima de fuerza. Nueva fuerza: {self.fuerza}")
+            else:
+                print("No tienes pócimas de fuerza disponibles.")
+        elif opcion == 3:
+            if self.inventario_pocimas["inteligencia"] > 0:
+                incremento = self.inteligencia * 0.5
+                self.inteligencia += incremento
+                self.inventario_pocimas["inteligencia"] -= 1
+                print(f"{self.nombre} usó una pócima de inteligencia. Nueva inteligencia: {self.inteligencia}")
+            else:
+                print("No tienes pócimas de inteligencia disponibles.")
+        else:
+            print("Valor inválido, intente nuevamente.")
+            # Lo regresamos a elegir
+            self.usar_pocima()   
         
     #escoger navaja
     def escoger_libro(self):
